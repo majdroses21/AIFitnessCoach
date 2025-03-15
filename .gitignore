@@ -3,7 +3,11 @@
 .data
 .nuxt
 .nitro
+<<<<<<< HEAD
 .cachecls
+=======
+.cache
+>>>>>>> 6a46dbf (Setting up the project environment, packages, and essential libraries.)
 dist
 
 # Node dependencies
