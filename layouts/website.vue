@@ -1,7 +1,11 @@
 <template>
     <div>
+      <v-app>
         <HeaderNav/>
+        <v-main>
           <slot/>
+        </v-main>
         <AppFooter/>
+      </v-app>
     </div>
 </template>
