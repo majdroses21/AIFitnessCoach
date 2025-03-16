@@ -21,24 +21,17 @@
             <v-text-field v-model="email" :rules="rules" variant="solo" type="email" label="Email" append-icon="mdi-email">
 
             </v-text-field>
-         
-              <v-text-field v-model="password" password :rules="rules" variant="solo" :type="pas==true ? 'text' : 'password'" label="Password" class=""
-                append-icon="mdi-key">
 
-              </v-text-field>
              
             <div style="display: flex;">
-                <v-text-field :rules="rules" variant="solo" :type="pas==true ? 'text' : 'password'" label="Repeat Password" class=""
+                <v-text-field :rules="rules" variant="solo" :type="pas==true ? 'text' : 'password'" label="Password" class=""
                   append-icon="mdi-key">
   
                 </v-text-field>
                 <v-checkbox return-object label="Show" style="margin:0 !important; padding:0 !important"
                   v-model="pas"></v-checkbox>
               </div>
-              <v-text-field :rules="rules" v-model="age" type="number" min="1" variant="solo" label="Age"></v-text-field>
-              <v-select :rules="rules" variant="solo" label="Gender" v-model="gender" :items="gender1">
-                
-              </v-select>
+              
             <v-btn variant="flat" color="success" class="mt-2" type="submit" block style="border-radius: 25px;">Submit</v-btn>
             <v-btn color="white" variant="text" style="right:0;position: absolute" class="mt-4">Forgot your password?</v-btn>
           

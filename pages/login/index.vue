@@ -12,7 +12,7 @@
       <v-spacer></v-spacer>
       
       <v-col sm="12" md="6" style="display: flex;flex-direction: column; justify-content: center;align-items: center;">
-        <v-card  variant="tonal" theme="" style="width:100%;backdrop-filter: blur(10px);" class="pa-8 pb-16">
+        <v-card  variant="tonal" theme="" style="width:100%;backdrop-filter: blur(10px);border-radius: 25px;" class="pa-8 pb-16">
         <v-form @submit.prevent style=" width:100%">
 
             <v-text-field :rules="rules" variant="solo" type="email" label="Email" class="mb-5" append-icon="mdi-email">
@@ -26,7 +26,7 @@
               <v-checkbox return-object label="Show" style="margin:0 !important; padding:0 !important"
                 v-model="pas"></v-checkbox>
             </div>
-            <v-btn variant="flat" color="success" class="mt-2" type="submit" block>Login</v-btn>
+            <v-btn style="border-radius: 25px;" variant="flat" color="success" class="mt-2" type="submit" block>Login</v-btn>
             <v-btn variant="text" style="right:0;position: absolute" class="mt-4">Forgot your password?</v-btn>
           </v-form>
         </v-card>
