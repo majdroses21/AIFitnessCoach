@@ -27,6 +27,18 @@ export default defineNuxtConfig({
       },
     },
   },
+  vuetify: {
+    theme: {
+      themes: {
+        dark: {
+          primary: '#ff5722', // استخدام لون مميز يتناسب مع تصميم رياضي
+          secondary: '#4caf50', // لون ثانوي
+          accent: '#ffc107', // أكسنت يليق بالرياضة
+          background: '#121212', // خلفية داكنة
+        },
+      },
+    },
+  },
   runtimeConfig: {
     public: {
       API_URL: process.env.API_URL,
