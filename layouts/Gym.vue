@@ -1,0 +1,11 @@
+<template>
+    <div>
+      <v-app>
+        <GymHeader/>
+        <v-main>
+          <slot/>
+        </v-main>
+        <GymFooter/>
+      </v-app>
+    </div>
+</template>
