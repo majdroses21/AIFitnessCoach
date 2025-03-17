@@ -1,5 +1,5 @@
 <template>
-
+<NuxtLayout name="auth">
     <div class="login pa-16 pb-0">
         <v-row>
            
@@ -40,7 +40,7 @@
       </v-col>
             </v-row>
     </div>
-
+  </NuxtLayout>
 </template>
 
 <style scoped>
