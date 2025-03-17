@@ -1,7 +1,8 @@
 <template>
-    <NuxtLayout name="">
+    <NuxtLayout name="website">
       <v-app class="ex" theme="">
-      <v-container>
+        <v-progress-linear color="primary" class="mt-8" indeterminate height="30px" v-if="this.load"> Wait to generete AI answere </v-progress-linear>
+      <v-container v-if="!this.load">
         <v-row>
           <v-col cols="12">
             <v-card class="mb-1">
@@ -294,6 +295,7 @@
     name: 'WorkoutPlan',
     data() {
       return {
+        load:true,
         // Original data from API
         workoutData: {
           status: "success",
@@ -591,6 +593,10 @@
     },
     
     created() {
+      setTimeout(() => {
+        this.load=false
+        
+      }, 5000);
       // Load favorites from localStorage in a real app
       const savedFavorites = localStorage.getItem('workout-favorites');
       if (savedFavorites) {
