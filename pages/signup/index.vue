@@ -13,7 +13,7 @@
       
       <v-col sm="12" class="" md="6" style="display: flex;flex-direction: column; justify-content: center;align-items: center;">
         <v-card  variant="tonal" theme="" style="width:100%;backdrop-filter: blur(10px);border-radius: 25px;" class="pa-8 pb-16">
-        <v-form @submit.prevent style=" width:100%">
+        <v-form @submit.prevent="submit" style=" width:100%">
             <v-text-field v-model="name" :rules="rules" variant="solo" label="Name" append-icon="mdi-email">
 
             </v-text-field>
@@ -52,6 +52,8 @@
    </style>
 
 <script setup>
+const API_URL= useRuntimeConfig().public.API_URL;
+import axios from 'axios';
   import { ref } from 'vue';
   const password = ref("")
   const email = ref("")
@@ -60,6 +62,11 @@
   const pas = ref("false")
   const gender =ref("")
   const gender1= ref(["male","female"])
+ const form = {
+        name: '',
+        email: '',
+        password: ''
+      };
   const rules= [
         value => {
           if (value) return true
@@ -67,4 +74,14 @@
           return 'You must enter this field.'
         }
       ];
+   const submit=  async function() {
+      try {
+        const response = await axios.post(`${API_URL}/auth/signup`, form);
+        console.log('Signup successful:', response.data);
+        // يمكنك إضافة إعادة توجيه أو عرض رسالة نجاح هنا
+      } catch (error) {
+        console.error('Signup failed:', error.response ? error.response.data : error.message);
+        // يمكنك عرض رسالة خطأ هنا
+      }
+    }
 </script>

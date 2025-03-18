@@ -1,16 +1,26 @@
 <template>
-    <v-app-bar theme="dark" prominent>
-        <v-app-bar-title class="text-h4 font-weight-bold">
+    <v-app-bar class="pr-6" theme="" prominent>
+        <v-app-bar-title class="text-button text-sm-4">
            {{ pageName }}
         </v-app-bar-title>
-        <v-spacer></v-spacer>
+        <v-spacer class="hidden-xs"></v-spacer>
         <!-- <v-btn variant="text" to="/health-system">Health System</v-btn> -->
         <!-- <v-btn variant="text" to="/p2">Page 2</v-btn> -->
         <!-- <v-btn variant="text" to="/p3">AI Coach</v-btn> -->
         <!-- <v-btn href="#packages" color="lime lighten-1" variant="flat">Get Started</v-btn> -->
+        <v-switch  @change="toggleTheme()"
+         append-icon="mdi-theme-light-dark"
+        >
+    
+        </v-switch>
     </v-app-bar>
 </template>
 <script setup>
+ import { useTheme } from 'vuetify'
+        const theme = useTheme()
+        function toggleTheme() {
+          theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark';
+        }
 defineProps({
     pageName: String
 })
