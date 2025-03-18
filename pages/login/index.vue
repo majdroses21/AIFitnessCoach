@@ -26,7 +26,7 @@
               <v-checkbox return-object label="Show" style="margin:0 !important; padding:0 !important"
                 v-model="pas"></v-checkbox>
             </div>
-            <v-btn style="border-radius: 25px;" to="/profile" variant="flat" color="success" class="mt-2" type="submit" block>Login</v-btn>
+            <v-btn style="border-radius: 25px;" to="/dashboard/profile" variant="flat" color="success" class="mt-2" type="submit" block>Login</v-btn>
             <v-btn variant="text" style="right:0;position: absolute" class="mt-4">Forgot your password?</v-btn>
           </v-form>
         </v-card>
