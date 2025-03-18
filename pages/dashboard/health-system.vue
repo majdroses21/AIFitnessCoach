@@ -1,7 +1,20 @@
 <template>
     <NuxtLayout name="gym">
-        <v-container fluid class="bg-grey-lighten-4 pa-4">
+        <v-app>
+        <v-container fluid class=" pa-4">
+           
             <v-row justify="center">
+                <v-col cols="12" md="10" lg="8">
+                    <v-card class="mb-1">
+                        <v-card-title class="text-h4 primary--text">
+                          <v-icon large left color="success">mdi-food-apple</v-icon>
+                          Healthy System
+                        
+                        </v-card-title>
+          
+                        <v-card-subtitle>Your way to a healthy, integrated diet</v-card-subtitle>
+                      </v-card>
+                </v-col>
                 <v-col cols="12" md="10" lg="8">
                     <v-card class="pa-6 mb-6">
                         <h1 class="text-h4 font-weight-bold mb-2">{{ planData.name }}</h1>
@@ -78,6 +91,7 @@
                 </v-col>
             </v-row>
         </v-container>
+    </v-app>
     </NuxtLayout>
 
 </template>

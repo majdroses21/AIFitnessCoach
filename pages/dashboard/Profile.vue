@@ -5,15 +5,6 @@
         <v-col lg="4" col="12">
           <p calss="text-primary">Name</p>
           <h1>Ammar AJ </h1>
-            
-          <v-avatar color="grey" rounded="10" size="90" >
-            <v-img :src="this.image2" cover></v-img>
-          </v-avatar>
-        <v-file-input style="" class="bg-orange  mt-10" v-model="this.image2" @change="this.onFileSelected2()"
-        label="صورة الحساب" type="file" accept="image/*" placeholder="Pick an avatar"
-        append-icon="mdi-camera"></v-file-input>
-        <v-btn class="mt-4" @click="console.log(this.image2)">تغيير</v-btn>
-        <pre> {{ this.image2 }} </pre>
 
           </v-col>
           <v-spacer></v-spacer>
@@ -56,23 +47,13 @@ export default {
         gender: null,
         selectedFile: null,
       
-        image2:"",
 
       },
       genders: ["male", "female"],
     };
   },
   methods: {
-    onFileSelected2: function () {
 
-const allowedTypes = ['image/jpeg', 'image/png'];
-if (this.image2) {
-    if (allowedTypes.includes(this.image2.type)) {
-        const objectURL = URL.createObjectURL(this.image2);
-        this.image2 = objectURL;
-    }else { this.err = true; this.image2 = '' }
-}
-},
     saveProfile() {
       if (this.$refs.form.valid) {
 

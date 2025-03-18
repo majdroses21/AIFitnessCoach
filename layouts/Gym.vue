@@ -2,7 +2,7 @@
   <v-app>
     <v-layout>
       <!-- Sidebar -->
-      <Sidebar />
+      <Sidebar class="hidden-sm-and-down" />
 
       <v-layout>
         <!-- Header -->
@@ -15,7 +15,7 @@
       </v-layout>
     </v-layout>
 
-    <LowerNav/>
+    <LowerNav class="hidden-md-and-up"/>
   </v-app>
 </template>
 <script setup>

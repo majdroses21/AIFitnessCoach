@@ -1,5 +1,5 @@
 <template>
-        <v-app-bar theme="dark" prominent>
+        <v-app-bar class="pr-16" theme="dark" prominent>
             <v-app-bar-title class="text-h4 font-weight-bold">
                 AI Fitness Coach
             </v-app-bar-title>

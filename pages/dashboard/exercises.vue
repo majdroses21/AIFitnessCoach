@@ -7,7 +7,7 @@
         <v-row>
           <v-col cols="12">
             <v-card class="mb-1">
-              <v-card-title class="text-h4 primary--text">
+              <v-card-title class="text-h4 primary-text">
                 <v-icon large left color="primary">mdi-dumbbell</v-icon>
                 Workout Plan
               
@@ -19,7 +19,6 @@
           </v-col>
         </v-row>
 
-        <!-- Stats Summary -->
         <v-row>
           <v-col cols="12" sm="4">
             <v-card class="text-center" elevation="2">
