@@ -10,8 +10,7 @@
               <v-card-title class="text-h4 primary--text">
                 <v-icon large left color="primary">mdi-dumbbell</v-icon>
                 Workout Plan
-                <v-switch style="translate: 0 10px;" @change="toggleTheme()"
-                  prepend-icon="mdi-theme-light-dark"></v-switch>
+              
               </v-card-title>
 
               <v-card-subtitle>Your personalized fitness journey</v-card-subtitle>
@@ -537,13 +536,9 @@ export default {
 
 <script setup>
 import { NuxtLayout } from '#components';
-import { useTheme } from 'vuetify'
+
 import { ref, watch } from 'vue';
-const theme = useTheme()
-let icon = "mdi-white-balance-sunny"
-function toggleTheme() {
-  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark';
-}
+
 
 
 

@@ -10,7 +10,7 @@
 
         <v-divider></v-divider>
 
-        <v-list density="compact" nav>
+        <v-list class="mb-3" density="compact" nav>
           <NuxtLink to="/dashboard" style="all: unset;">
             <v-list-item prepend-icon="mdi-home" title="Home" value="home"></v-list-item>
           </NuxtLink>
@@ -30,12 +30,22 @@
           <NuxtLink to="/dashboard/Profile" style="all: unset;">
             <v-list-item prepend-icon="mdi-account" title="Profile" value="Profile"></v-list-item>
           </NuxtLink>
+          
         </v-list>
+        <v-btn prepend-icon="mdi-theme-light-dark" @click="toggleTheme()"
+        ></v-btn>
       </v-navigation-drawer>
-      <v-main style="height: 350px"></v-main>
+      <v-main style="height: 370px"></v-main>
     </v-layout>
   </v-card>
 </template>
+<script setup>
+import { useTheme } from 'vuetify'
+const theme = useTheme()
+function toggleTheme() {
+  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark';
+}
+</script>
 <script>
 export default {
   data() {
