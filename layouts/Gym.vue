@@ -1,11 +1,24 @@
 <template>
-    <div>
-      <v-app>
-        <GymHeader/>
+  <v-app>
+    <v-layout>
+      <!-- Sidebar -->
+      <Sidebar />
+
+      <v-layout>
+        <!-- Header -->
+        <GymHeader :pageName="pageName" />
+
+        <!-- Main Content -->
         <v-main>
-          <slot/>
+          <slot />
         </v-main>
-        <GymFooter/>
-      </v-app>
-    </div>
+      </v-layout>
+    </v-layout>
+
+    <LowerNav/>
+  </v-app>
 </template>
+<script setup>
+
+const pageName = 'AI Fitness Coach'
+</script>
