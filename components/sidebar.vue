@@ -28,7 +28,7 @@
           <NuxtLink to="/dashboard/Profile" style="all: unset;">
             <v-list-item prepend-icon="mdi-account" title="Profile" value="Profile"></v-list-item>
           </NuxtLink>
-          
+          <v-list-item class="mt-5" prepend-icon="mdi-logout" title="logout" value="logout"></v-list-item>
         </v-list>
        
       </v-navigation-drawer>

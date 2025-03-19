@@ -13,9 +13,9 @@
       
       <v-col sm="12" md="6" style="display: flex;flex-direction: column; justify-content: center;align-items: center;">
         <v-card  variant="tonal" theme="" style="width:100%;backdrop-filter: blur(10px);border-radius: 25px;" class="pa-8 pb-16">
-        <v-form @submit.prevent style=" width:100%">
+        <v-form ref="form" @submit.prevent="submit" style=" width:100%">
 
-            <v-text-field v-model="email" :rules="rules" variant="solo" type="email" label="Email" class="mb-5" append-icon="mdi-email">
+            <v-text-field v-model="email" :rules="emailrulea" variant="solo" type="email" label="Email" class="mb-5" append-icon="mdi-email">
 
             </v-text-field>
             <div style="display: flex;">
@@ -23,12 +23,14 @@
                 append-icon="mdi-key">
 
               </v-text-field>
-              <v-checkbox return-object label="Show" style="margin:0 !important; padding:0 !important"
+              <v-checkbox class="text-white" return-object label="Show" style="margin:0 !important; padding:0 !important"
                 v-model="pas"></v-checkbox>
             </div>
-            <v-btn style="border-radius: 25px;" to="/dashboard/profile" variant="flat" color="success" class="mt-2" type="submit" block>Login</v-btn>
-            <v-btn variant="text" style="right:0;position: absolute" class="mt-4">Forgot your password?</v-btn>
-          </v-form>
+            <v-alert v-if="errorMessage" type="error" icon="mdi-alert-circle">
+              {{ errorMessage }}
+            </v-alert>
+            <v-btn style="border-radius: 25px;"  variant="flat" color="success" class="mt-2" type="submit" block>Login</v-btn>
+               </v-form>
         </v-card>
       </v-col>
             </v-row>
@@ -46,15 +48,53 @@
    </style>
 
 <script setup>
+import axios from 'axios';
+import Cookies from 'js-cookie';
+const API_URL= useRuntimeConfig().public.API_URL;
   import { ref } from 'vue';
   const pas = ref("false")
   const password = ref("")
   const email = ref("")
+  const form = ref(null)
   const rules= [
         value => {
           if (value) return true
 
-          return 'You must enter this field.'
+          return 'يجب عليك ملئ هذا الحقل.'
         }
       ];
+     const emailrulea= [
+        v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'البريد الالكتروني غير صحيح ']
+       var errorMessage = ref("");
+       const submit= async function() {
+    const personalInfo = reactive({
+  email: email.value, 
+  password: password.value
+});
+console.log(personalInfo);
+ form.value.validate()
+        .then(async valid =>  {
+          if (valid.valid == true) { {
+      try {
+        const response = await axios.post(`${API_URL}/auth/login`, {
+         password: personalInfo.password,
+         email: personalInfo.email
+        });
+        console.log('login successful:', response.data);
+        errorMessage.value = ''
+       Cookies.set("token",response.data.data.token)
+        // this.$route.push("/dashboard/profile");
+        
+      } catch (error) {
+        console.error('Signup failed:', error.response ? error.response.data : error.message);
+      if(error.response.data.message == "Invalid credentials"){
+        errorMessage.value= " البريد الالكتروني او كلمة المرور خطأ"
+        
+      }
+        email.value='';
+        password.value=''
+      }
+
+}
+   }})}
 </script>
