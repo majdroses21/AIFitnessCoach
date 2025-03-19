@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout name="gym">
-    <v-app class="ex" theme="">
+    <v-app class="ex pb-13" theme="">
       <v-progress-linear color="primary" class="mt-8" indeterminate height="30px" v-if="this.load"> Wait to generete AI
         answere </v-progress-linear>
       <v-container v-if="!this.load">
@@ -574,5 +574,4 @@ import { ref, watch } from 'vue';
   border-left: 4px solid var(--v-primary-base) !important;
 }
 
-.ex {}
 </style>
