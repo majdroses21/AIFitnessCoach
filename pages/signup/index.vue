@@ -100,7 +100,7 @@ console.log(personalInfo);
         console.log('Signup successful:', response.data);
         errorMessage.value=''
        Cookies.set("token",response.data.data.token)
-        this.$route.push("/dashboard/profile");
+     
         
       } catch (error) {
         // console.error('Signup failed:', error.response ? error.response.data : error.message);
