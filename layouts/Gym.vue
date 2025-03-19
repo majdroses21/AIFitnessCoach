@@ -3,7 +3,7 @@
     <v-layout>
       <!-- Sidebar -->
       <Sidebar class="hidden-sm-and-down" />
-
+      
       <v-layout>
         <!-- Header -->
         <GymHeader :pageName="pageName" />
@@ -14,9 +14,10 @@
         </v-main>
       </v-layout>
     </v-layout>
-
+    
     <LowerNav class="hidden-md-and-up"/>
   </v-app>
+  <UserProfile/>
 </template>
 <script setup>
 
