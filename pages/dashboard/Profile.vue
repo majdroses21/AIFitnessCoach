@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout name="gym">
-    <v-container>
+    <v-container class="pb-13">
       <v-row>
         <v-col lg="4" col="12">
           <p calss="text-primary">Name</p>
