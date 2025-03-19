@@ -28,18 +28,20 @@
                   append-icon="mdi-key">
   
                 </v-text-field>
-                <v-checkbox return-object label="Show" style="margin:0 !important; padding:0 !important"
+                <v-checkbox class="text-white" return-object label="Show" style="margin:0 !important; padding:0 !important"
                   v-model="pas"></v-checkbox>
               </div>
-              <p class="text-red text-button"> {{ errorMessage }} </p>
-            <v-btn variant="flat" color="success" class="mt-2" type="submit" block style="border-radius: 25px;">Submit</v-btn>
-            <v-btn color="white" variant="text" style="right:0;position: absolute" class="mt-4">Forgot your password?</v-btn>
-             
+              <v-alert v-if="errorMessage" type="error" icon="mdi-alert-circle">
+                {{ errorMessage }}
+              </v-alert>
+                    <v-btn variant="flat" color="success" class="mt-2" type="submit" block style="border-radius: 25px;">Submit</v-btn>
+           
         </v-form>
         </v-card>
       </v-col>
             </v-row>
     </div>
+    
   </NuxtLayout>
 </template>
 
@@ -51,13 +53,13 @@
     background-size: cover;
   }
    </style>
-
 <script setup>
 import Cookies from 'js-cookie';
 const API_URL= useRuntimeConfig().public.API_URL;
 import axios from 'axios';
-
+  const store = useAuthStore
   import { ref } from 'vue';
+import { useAuthStore } from '~/store/auth';
   const form = ref(null)
   const password = ref("")
   const email = ref("")
@@ -70,12 +72,12 @@ import axios from 'axios';
         value => {
           if (value) return true
 
-          return 'يجب عليك ملئ هذا الحقل.'
+          return 'You must enter this field'
         }
       ];
      const emailrulea= [
         v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'البريد الالكتروني غير صحيح ']
-       var errorMessage = ref("")
+       let errorMessage = ref(null)
    const submit= async function() {
     const personalInfo = reactive({
   email: email.value, 
@@ -87,18 +89,26 @@ console.log(personalInfo);
         .then(async valid =>  {
           if (valid.valid == true) { {
       try {
+ 
         const response = await axios.post(`${API_URL}/auth/signup`, {
          name: personalInfo.name,
          password: personalInfo.password,
          email: personalInfo.email
-        });
+        }); 
+        console.log(response.data.data.user);
+        store.loginSave(response.data.data.user)
         console.log('Signup successful:', response.data);
+        errorMessage.value=''
        Cookies.set("token",response.data.data.token)
         this.$route.push("/dashboard/profile");
         
       } catch (error) {
-        console.error('Signup failed:', error.response ? error.response.data : error.message);
-        errorMessage = error.response.data.message
+        // console.error('Signup failed:', error.response ? error.response.data : error.message);
+        errorMessage.value = error.response.data.message 
+        console.log(errorMessage.value)
+        name.value='';
+        email.value='';
+        password.value=''
       }
 
 }
