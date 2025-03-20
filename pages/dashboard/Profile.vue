@@ -4,7 +4,7 @@
       <v-row>
         <v-col lg="4" col="12">
           <p calss="text-primary">Name</p>
-          <h1>Ammar AJ </h1> //TODO: جيب اسم المستخدم الي مسجل
+          <h1>{{ store.user.personalInfo.name }} </h1> 
 
         </v-col>
         <v-spacer></v-spacer>
@@ -38,9 +38,13 @@
 
 
 <script setup>
+import { useAuthStore } from '~/store/auth';
+
 definePageMeta({
   middleware: 'auth'
 })
+
+const store = useAuthStore();
 const profile = {
   age: null,
   weight: null,
