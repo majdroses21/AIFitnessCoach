@@ -137,7 +137,7 @@
                                 <v-card-item>
                                     <v-icon size="48" color="green" class="mb-4">mdi-star</v-icon>
                                     <v-card-title class="text-h5">Standard Plan</v-card-title>
-                                    <v-card-subtitle>$600 / month</v-card-subtitle>
+                                    <v-card-subtitle>$19.99$ / month</v-card-subtitle>
                                 </v-card-item>
                                 <v-card-text>
                                     <ul class="text-left">
@@ -158,7 +158,7 @@
                                 <v-card-item>
                                     <v-icon size="48" color="amber" class="mb-4">mdi-crown</v-icon>
                                     <v-card-title class="text-h5">Premium Plan</v-card-title>
-                                    <v-card-subtitle>$900 / month</v-card-subtitle>
+                                    <v-card-subtitle>$29.99 / month</v-card-subtitle>
                                 </v-card-item>
                                 <v-card-text>
                                     <ul class="text-left">

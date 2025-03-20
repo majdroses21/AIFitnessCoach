@@ -1,9 +1,9 @@
 <template>
   <NuxtLayout name="gym">
     <v-app class="ex pb-13" theme="">
-      <v-progress-linear color="primary" class="mt-8" indeterminate height="30px" v-if="this.load"> Wait to generete AI
+      <v-progress-linear color="primary" class="mt-8" indeterminate height="30px" v-if="load"> Wait to generete AI
         answere </v-progress-linear>
-      <v-container v-if="!this.load">
+      <v-container v-if="!load">
         <v-row>
           <v-col cols="12">
             <v-card class="mb-1">
@@ -175,6 +175,7 @@
                       {{ formatTime(timerRemaining) }}
                     </template>
                   </v-progress-linear>
+                 <pre> {{ timerRemaining }} </pre>
                 </v-col>
               </v-row>
               <v-row class="mt-4">
@@ -212,10 +213,14 @@
     </v-app>
   </NuxtLayout>
 </template>
-
+<!-- 
 <script>
+import axios from 'axios';
+import { useAuthStore } from '~/store/auth';
+
 export default {
   name: 'WorkoutPlan',
+  
   data() {
     return {
       load: true,
@@ -428,8 +433,10 @@ export default {
       return this.exercises.reduce((total, exercise) => total + exercise.caloriesBurned, 0);
     }
   },
-
   methods: {
+  getWorkout: async function(){
+     
+  },
     difficultyColor(difficulty) {
       switch (difficulty) {
         case 'beginner':
@@ -516,7 +523,7 @@ export default {
   },
 
   created() {
-    setTimeout(() => {
+    setTimeout(async () => {
       this.load = false
 
     }, 5000);
@@ -531,19 +538,281 @@ export default {
     }
   }
 }
-</script>
+</script> -->
+
+
 
 <script setup>
-import { NuxtLayout } from '#components';
 
+import { ref, computed, onMounted } from 'vue';
+import { useAuthStore } from '~/store/auth';
+import { NuxtLayout } from '#components';
+import axios from 'axios';
+const store= useAuthStore();
+const API_URL = useRuntimeConfig().public.API_URL;
 definePageMeta({
   middleware: 'auth'
 })
+let load = ref(true);
+const workoutData = ref({
+  status: "success",
+  data: {
+    // plan: [
+    //         {
+    //           _id: "67d6299bd498ee732f72cc97",
+    //           name: "Dumbbell Bench Press",
+    //           description: "Lie on a bench with feet flat on the floor. Hold dumbbells at chest height, palms facing each other. Lower dumbbells slowly to your chest, keeping your elbows slightly bent. Push dumbbells back up to starting position.",
+    //           difficulty: "intermediate",
+    //           targetMuscles: [
+    //             "Pectorals",
+    //             "Triceps",
+    //             "Shoulders"
+    //           ],
+    //           equipment: [],
+    //           createdBy: "67d3968af0eafbf665b44e7d",
+    //           tips: [
+    //             "Maintain a controlled movement throughout the exercise.",
+    //             "Avoid bouncing the dumbbells off your chest."
+    //           ],
+    //           caloriesBurned: 200,
+    //           duration: 30,
+    //           createdAt: "2025-03-16T01:30:03.448Z",
+    //           updatedAt: "2025-03-16T01:30:03.448Z"
+    //         },
+    //         {
+    //           _id: "67d6299bd498ee732f72cc98",
+    //           name: "Resistance Band Rows",
+    //           description: "Loop a resistance band around a sturdy object at chest height. Hold the ends of the band with both hands, maintaining a straight back. Pull the band towards your chest, squeezing your shoulder blades together. Slowly return to starting position.",
+    //           difficulty: "intermediate",
+    //           targetMuscles: [
+    //             "Back",
+    //             "Biceps",
+    //             "Forearms"
+    //           ],
+    //           equipment: [],
+    //           createdBy: "67d3968af0eafbf665b44e7d",
+    //           tips: [
+    //             "Keep your core engaged throughout the exercise.",
+    //             "Avoid arching your back."
+    //           ],
+    //           caloriesBurned: 150,
+    //           duration: 30,
+    //           createdAt: "2025-03-16T01:30:03.448Z",
+    //           updatedAt: "2025-03-16T01:30:03.448Z"
+    //         },
+    //         {
+    //           _id: "67d6299bd498ee732f72cc99",
+    //           name: "Yoga Sun Salutations",
+    //           description: "A sequence of poses that involves flowing movements from forward bend to backbend, ending in a standing forward bend. Specific instructions for each pose can be found online or through a yoga video.",
+    //           difficulty: "intermediate",
+    //           targetMuscles: [
+    //             "Entire Body"
+    //           ],
+    //           equipment: [],
+    //           createdBy: "67d3968af0eafbf665b44e7d",
+    //           tips: [
+    //             "Focus on proper breathing and alignment.",
+    //             "Listen to your body and modify as needed."
+    //           ],
+    //           caloriesBurned: 100,
+    //           duration: 20,
+    //           createdAt: "2025-03-16T01:30:03.448Z",
+    //           updatedAt: "2025-03-16T01:30:03.448Z"
+    //         },
+    //         {
+    //           _id: "67d6299bd498ee732f72cc9a",
+    //           name: "Swimming (Freestyle)",
+    //           description: "Maintain a consistent rhythm, proper breathing technique, and streamlined body position to maximize efficiency and avoid injury.",
+    //           difficulty: "intermediate",
+    //           targetMuscles: [
+    //             "Entire Body"
+    //           ],
+    //           equipment: [],
+    //           createdBy: "67d3968af0eafbf665b44e7d",
+    //           tips: [
+    //             "Maintain proper form and breathing for efficient movement.",
+    //             "Listen to your body and stop if you feel pain."
+    //           ],
+    //           caloriesBurned: 350,
+    //           duration: 45,
+    //           createdAt: "2025-03-16T01:30:03.448Z",
+    //           updatedAt: "2025-03-16T01:30:03.448Z"
+    //         },
+    //         {
+    //           _id: "67d6299bd498ee732f72cc9b",
+    //           name: "Bodyweight Squats",
+    //           description: "Stand with feet shoulder-width apart, toes slightly outward. Lower your hips as if sitting in a chair, keeping your back straight and chest up. Push through your heels to return to standing position.",
+    //           difficulty: "beginner",
+    //           targetMuscles: [
+    //             "Quads",
+    //             "Glutes",
+    //             "Hamstrings"
+    //           ],
+    //           equipment: [],
+    //           createdBy: "67d3968af0eafbf665b44e7d",
+    //           tips: [
+    //             "Keep your knees aligned with your toes.",
+    //             "Engage your core to maintain stability."
+    //           ],
+    //           caloriesBurned: 120,
+    //           duration: 25,
+    //           createdAt: "2025-03-16T01:30:03.448Z",
+    //           updatedAt: "2025-03-16T01:30:03.448Z"
+    //         },
+    //         {
+    //           _id: "67d6299bd498ee732f72cc9c",
+    //           name: "Tree Pose (Vrksasana)",
+    //           description: "Stand tall, shift your weight onto your left leg, and place the sole of your right foot against your inner left thigh. Bring your hands to prayer position or extend them overhead. Hold for 30 seconds, then repeat on the other side.",
+    //           difficulty: "beginner",
+    //           targetMuscles: [
+    //             "Legs",
+    //             "Core"
+    //           ],
+    //           equipment: [],
+    //           createdBy: "67d3968af0eafbf665b44e7d",
+    //           tips: [
+    //             "Maintain balance and focus.",
+    //             "Engage core muscles for stability."
+    //           ],
+    //           caloriesBurned: 50,
+    //           duration: 15,
+    //           createdAt: "2025-03-16T01:30:03.449Z",
+    //           updatedAt: "2025-03-16T01:30:03.449Z"
+    //         }
+    //       ]
+  }
+});
+onMounted( async () => {
+  load.value=true
+    let response=  await axios.get(`${API_URL}/exercises/${store.user._id}`)
+    console.log(response.data);
+    workoutData.value = response.data; 
+    load.value=false
+})
+const difficultyFilter = ref(null);
+const muscleFilter = ref(null);
+const searchQuery = ref('');
 
+const favorites = ref([]);
 
+const selectedExercise = ref(null);
+const exerciseDialog = ref(false);
+let timerRunning = ref(false);
+let timerRemaining = ref(0);
+let timerProgress = ref(0);
+let timerInterval = ref(null);
 
+const exercises = computed(() => workoutData.value.data.plan);
+
+const filteredExercises = computed(() => {
+  return exercises.value.filter(exercise => {
+    if (difficultyFilter.value && exercise.difficulty !== difficultyFilter.value) {
+      return false;
+    }
+    if (muscleFilter.value && !exercise.targetMuscles.includes(muscleFilter.value)) {
+      return false;
+    }
+    if (searchQuery.value) {
+      const query = searchQuery.value.toLowerCase();
+      return (
+        exercise.name.toLowerCase().includes(query) ||
+        exercise.description.toLowerCase().includes(query) ||
+        exercise.targetMuscles.some(muscle => muscle.toLowerCase().includes(query))
+      );
+    }
+    return true;
+  });
+});
+
+const difficultyLevels = computed(() => {
+  const levels = new Set();
+  exercises.value.forEach(exercise => {
+    levels.add(exercise.difficulty);
+  });
+  return Array.from(levels);
+});
+
+const allMuscles = computed(() => {
+  const muscles = new Set();
+  exercises.value.forEach(exercise => {
+    exercise.targetMuscles.forEach(muscle => {
+      muscles.add(muscle);
+    });
+  });
+  return Array.from(muscles).sort();
+});
+
+const totalExercises = computed(() => exercises.value.length);
+
+const totalDuration = computed(() => exercises.value.reduce((total, exercise) => total + exercise.duration, 0));
+
+const totalCalories = computed(() => exercises.value.reduce((total, exercise) => total + exercise.caloriesBurned, 0));
+
+function difficultyColor(difficulty) {
+  switch (difficulty) {
+    case 'beginner':
+      return 'success';
+    case 'intermediate':
+      return 'warning';
+    case 'advanced':
+      return 'error';
+    default:
+      return 'primary';
+  }
+}
+
+function difficultyColorClass(difficulty) {
+  return `border-left-4 border-${difficultyColor(difficulty)}`;
+}
+function isFavorite(exercise) {
+      return this.favorites.some(fav => fav._id === exercise._id);
+    }
+function resetFilters() {
+  difficultyFilter.value = null;
+  muscleFilter.value = null;
+  searchQuery.value = '';
+}
+function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const remainingSeconds = seconds % 60;
+      return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+    }
+function startExercise(exercise) {
+  selectedExercise.value = exercise;
+  timerRemaining.value = exercise.duration * 60; // Convert to seconds
+  timerProgress.value = 0;
+  exerciseDialog.value = true;
+}
+function addToFavorites(exercise) {
+  const index = favorites}
+ function toggleTimer() {
+      if (timerRunning) {
+        clearInterval(timerInterval);
+        timerRunning = false;
+      } else {
+        timerRunning = true;
+timerInterval = setInterval(() => {
+  if (timerRemaining.value > 0) {
+    timerRemaining.value--;
+    timerProgress.value = 100 - (timerRemaining / (selectedExercise.value.duration * 60) * 100);
+  } else {
+    clearInterval(timerInterval);
+    timerRunning = false;
+  }
+}, 1000);
+      }
+    }
+
+  function resetTimer() {
+      clearInterval(timerInterval);
+      timerRunning = false;
+      timerRemaining = selectedExercise.value.duration * 60;
+      timerProgress = 0;
+    }
 
 </script>
+
+
 
 <style>
 .exercise-card {

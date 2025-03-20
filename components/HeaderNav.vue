@@ -33,7 +33,9 @@
         </v-list>
       </v-menu>
     </v-btn>
+    <v-btn class="hidden-sm-and-down" variant="text" to="/">Home</v-btn>
             <v-btn class="hidden-sm-and-down" variant="text" :href="'#features'">Features</v-btn>
+            
             <v-btn class="hidden-sm-and-down" variant="text" :href="'#science'">Science</v-btn>
             <v-btn class="hidden-sm-and-down" variant="text" to="/about">About us</v-btn>
             <v-btn class="hidden-sm-and-down" variant="text" to="/contact">Contact us</v-btn>
