@@ -1,6 +1,6 @@
 <template>
   <div class="pa-4 text-center">
-    <v-dialog persistent v-model="isCompleatInfo" max-width="600">
+    <v-dialog persistent v-model="fls" max-width="600">
       <v-card prepend-icon="mdi-account" title="User Profile">
         <v-card-text>
           <v-row dense>
@@ -35,7 +35,7 @@
 </template>
 <script setup>
 import { useAuthStore } from '~/store/auth';
-
+const fls=ref(false)
 const apiUrl = useRuntimeConfig().public.API_URL
 
 const store = useAuthStore();
@@ -44,9 +44,8 @@ let isCompleatInfo = ref(null);
 const profile = {
   age: null,
   weight: null,
-
   height: null,
-  gender: null,
+  gender: '',
   selectedFile: null,
 };
 const genders = ["male", "female"];
