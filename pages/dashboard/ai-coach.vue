@@ -20,7 +20,7 @@
                 </div>
 
                 <v-card-actions class="chat-input px-4 py-2">
-                    <v-text-field v-model="newMessage" placeholder="اكتب رسالتك هنا..." @keyup.enter="sendMessage"
+                    <v-text-field v-model="newMessage" placeholder="Write your message here..." @keyup.enter="sendMessage"
                         :disabled="isAiTyping" hide-details variant="solo" class="chat-input-field"
                         density="comfortable" bg-color="input-background">
                         <template v-slot:prepend-inner>

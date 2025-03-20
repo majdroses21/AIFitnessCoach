@@ -1,6 +1,6 @@
 <template>
   <div class="pa-4 text-center">
-    <v-dialog persistent v-model="fls" max-width="600">
+    <v-dialog persistent v-model="isCompleatInfo" max-width="600">
       <v-card prepend-icon="mdi-account" title="User Profile">
         <v-card-text>
           <v-row dense>
