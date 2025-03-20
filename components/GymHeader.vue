@@ -18,8 +18,13 @@
 <script setup>
  import { useTheme } from 'vuetify'
         const theme = useTheme()
+        const themeCookie = useCookie('theme', { default: () => 'light' }) // استرجاع الثيم المحفوظ
+        
+        theme.global.name.value = themeCookie.value ;
         function toggleTheme() {
-          theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark';
+        const newTheme = theme.global.current.value.dark ? 'light' : 'dark';
+        theme.global.name.value = newTheme;
+          themeCookie.value = newTheme;
         }
 defineProps({
     pageName: String
