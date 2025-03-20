@@ -34,11 +34,13 @@
   </div>
 </template>
 <script setup>
+import { useAuthStore } from '~/store/auth';
 
 const apiUrl = useRuntimeConfig().public.API_URL
-let dialog = 1;
+
+const store = useAuthStore();
+console.log(787);
 let isCompleatInfo = ref(null);
-// let dialog = ref(false);
 const profile = {
   age: null,
   weight: null,
@@ -48,7 +50,7 @@ const profile = {
   selectedFile: null,
 };
 const genders = ["male", "female"];
-const userId = '67dad9b394bdca3398b4bfc4';
+const userId = store.user._id;
 
 const { data, error } = useFetch(apiUrl + '/profile/' + userId + '/completion', {
   headers: {

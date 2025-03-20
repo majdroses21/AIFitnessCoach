@@ -41,7 +41,9 @@
     </NuxtLayout>
 </template>
 <script setup lang="ts">
-import { ref, nextTick, onMounted } from 'vue'
+definePageMeta({
+  middleware: 'auth'
+})
 
 interface Message {
     text: string
