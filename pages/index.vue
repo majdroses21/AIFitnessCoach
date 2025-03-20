@@ -197,6 +197,9 @@
 
 <script setup lang="ts">
 // Component is fully setup using composition API
+definePageMeta({
+  middleware: 'guest'
+})
 </script>
 <style scoped>
 html {

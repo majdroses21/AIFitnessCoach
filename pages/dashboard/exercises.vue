@@ -536,7 +536,9 @@ export default {
 <script setup>
 import { NuxtLayout } from '#components';
 
-import { ref, watch } from 'vue';
+definePageMeta({
+  middleware: 'auth'
+})
 
 
 
