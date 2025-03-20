@@ -10,7 +10,7 @@
 
         <v-divider></v-divider>
 
-        <v-list class="mb-3" density="compact" nav>
+        <v-list style="height:80%" class="mb-3" density="compact" nav>
       
 
           <NuxtLink to="/dashboard/health-system" style="all: unset;">
@@ -28,14 +28,23 @@
           <NuxtLink to="/dashboard/Profile" style="all: unset;">
             <v-list-item prepend-icon="mdi-account" title="Profile" value="Profile"></v-list-item>
           </NuxtLink>
-          <v-list-item class="mt-5" prepend-icon="mdi-logout" title="logout" value="logout"></v-list-item>
+          <v-list-item style="position:absolute;bottom:0" class="text-red-darken-2 logout" prepend-icon="mdi-logout" title="logout" value="logout">
+             <v-tooltip activator="parent">Logout</v-tooltip>
+
+          </v-list-item>
         </v-list>
        
       </v-navigation-drawer>
-      <v-main style="height: 370px"></v-main>
+      <v-main style="height: 100vh"></v-main>
     </v-layout>
   </v-card>
 </template>
+<style>
+ .logout{transition: 0.4s;}
+ .logout:hover{
+  rotate: -20deg;
+ }
+</style>
 <script setup>
 
 </script>
