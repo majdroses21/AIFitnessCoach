@@ -40,28 +40,27 @@
         </v-container>
     </NuxtLayout>
 </template>
-<script setup lang="ts">
+
+<script setup>
+import { useAuthStore } from '~/store/auth'
+
+const apiUrl = useRuntimeConfig().public.API_URL
+const store = useAuthStore();
+const userId = store.user._id;
 definePageMeta({
   middleware: 'auth'
 })
 
-interface Message {
-    text: string
-    isUser: boolean
-    timestamp: Date
-    isTyping?: boolean
-}
-
-const messages = ref<Message[]>([
+const messages = ref([
     {
-        text: "مرحباً! أنا مدربك الرياضي الذكي. كيف يمكنني مساعدتك؟",
+        text: "Hello! I'm your smart sports coach. How can I help you?",
         isUser: false,
         timestamp: new Date()
     }
 ])
 
 const newMessage = ref('')
-const chatContainer = ref<HTMLElement | null>(null)
+const chatContainer = ref(null)
 const isAiTyping = ref(false)
 
 const scrollToBottom = async () => {
@@ -69,28 +68,6 @@ const scrollToBottom = async () => {
     if (chatContainer.value) {
         chatContainer.value.scrollTop = chatContainer.value.scrollHeight
     }
-}
-
-const simulateTyping = async (text: string) => {
-    isAiTyping.value = true
-    messages.value.push({
-        text: '●●●',
-        isUser: false,
-        timestamp: new Date(),
-        isTyping: true
-    })
-    await scrollToBottom()
-
-    await new Promise(resolve => setTimeout(resolve, 1500))
-
-    messages.value = messages.value.filter(m => !m.isTyping)
-    messages.value.push({
-        text,
-        isUser: false,
-        timestamp: new Date()
-    })
-    isAiTyping.value = false
-    await scrollToBottom()
 }
 
 const sendMessage = async () => {
@@ -106,21 +83,48 @@ const sendMessage = async () => {
     })
     await scrollToBottom()
 
-    const responses = [
-        "هذا هدف رائع! بناءً على ما تريد تحقيقه، أوصي بالبدء بروتين متوازن يشمل تمارين القلب وتمارين القوة. هل تريد أن أنشئ لك خطة مخصصة؟",
-        "الترطيب مهم جداً للأداء الأمثل. تأكد من شرب الماء قبل وأثناء وبعد التمارين. لمستوى نشاطك، أوصي بشرب 2-3 لتر من الماء يومياً.",
-        "من المهم التركيز على الشكل والتقنية الصحيحة. دعنا نستعرض التمارين الأساسية التي ستساعدك في تحقيق أهدافك.",
-        "التغذية تلعب دوراً حيوياً في تحقيق أهدافك الرياضية. بناءً على احتياجاتك، يمكنني اقتراح خطة وجبات متوازنة.",
-        "الراحة مهمة بقدر أهمية التمرين نفسه. أوصي بدمج أيام الراحة والنوم الكافي في روتينك."
-    ]
+    try {
+        isAiTyping.value = true
+        messages.value.push({
+            text: '●●●',
+            isUser: false,
+            timestamp: new Date(),
+            isTyping: true
+        })
+        await scrollToBottom()
 
-    await simulateTyping(responses[Math.floor(Math.random() * responses.length)])
+        // استدعاء API لجلب الرد من السيرفر
+        const { data } = await useFetch(apiUrl + '/chat/' + userId, {
+            method: 'POST',
+            body: { prompt: userMessage }
+        })
+
+        messages.value = messages.value.filter(m => !m.isTyping)
+        console.log(data.value.data.response,22);
+        messages.value.push({
+            text: data.value.data.response || "I didn't understand your question, can you rephrase?",
+            isUser: false,
+            timestamp: new Date()
+        })
+    } catch (error) {
+        console.error("Error fetching response:", error)
+        messages.value = messages.value.filter(m => !m.isTyping)
+        messages.value.push({
+            text: "An error occurred while processing your request. Try again later.",
+            isUser: false,
+            timestamp: new Date()
+        })
+    } finally {
+        isAiTyping.value = false
+        await scrollToBottom()
+    }
 }
 
 onMounted(() => {
     scrollToBottom()
 })
 </script>
+
 
 <style scoped>
 .chat-container {
