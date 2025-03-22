@@ -106,9 +106,8 @@ const submit = async function() {
         });
 
         console.log(response.data.data.user);
-        store.loginSave(response.data.data.user);
+        store.loginSave(response.data.data.user,response.data.data.token);
         errorMessage.value = '';
-        useCookie('token').value = response.data.data.token;
         navigateTo('/dashboard/profile')
 
         console.log('Signup successful:', response.data);
@@ -120,79 +119,5 @@ const submit = async function() {
       }
     }
   });
-  
-  console.log(476, useCookie('token').value);
 };
 </script>
-
-   <!--  
-<script setup>
-// let token = useCookie('token').value = null;
-useCookie('token').value = null;
-
- definePageMeta({
-  middleware: 'guest'
-})
-const API_URL= useRuntimeConfig().public.API_URL;
-import axios from 'axios';
-  const store = useAuthStore
-import { useAuthStore } from '~/store/auth';
-  const form = ref(null)
-  const password = ref("")
-  const email = ref("")
-  const name = ref("")
-  const age = ref("")
-  const pas = ref("false")
-  const gender =ref("")
-  const gender1= ref(["male","female"])
-  const rules= [
-        value => {
-          if (value) return true
-
-          return 'You must enter this field'
-        }
-      ];
-     const emailrulea= [
-        v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'البريد الالكتروني غير صحيح ']
-       let errorMessage = ref(null)
-   const submit= async function() {
-    const personalInfo = reactive({
-  email: email.value, 
-  name: name.value,
-  password: password.value
-});
-console.log(personalInfo);
- form.value.validate()
-        .then(async valid =>  {
-          if (valid.valid == true) { {
-      try {
- 
-        const response = await axios.post(`${API_URL}/auth/signup`, {
-         name: personalInfo.name,
-         password: personalInfo.password,
-         email: personalInfo.email
-        }); 
-        console.log(response.data.data.user);
-        store.loginSave(response.data.data.user)
-        console.log('Signup successful:', response.data);
-        errorMessage.value=''
-        console.log('Ammar');
-        console.log(1,useCookie('token'));
-        useCookie('token').value =  response.data.data.token
-        console.log(2,useCookie('token'));
-      // useCookie('token').value = response.data.data.token
-     
-        
-      } catch (error) {
-        // console.error('Signup failed:', error.response ? error.response.data : error.message);
-        // errorMessage.value = error.response.data.message 
-        console.log(errorMessage.value)
-        name.value='';
-        email.value='';
-        password.value=''
-      }
-
-}
-   }})}
-   console.log(476, useCookie('token').value);
-</script>-->
