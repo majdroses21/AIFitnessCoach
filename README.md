@@ -1,6 +1,9 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # AIFitnessCoach
 =======
+=======
+>>>>>>> 187e2c0cf5c8eb0b2d2047666410bd74ffa78803
 # Nuxt Minimal Starter
 
 Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
@@ -76,4 +79,7 @@ bun run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+<<<<<<< HEAD
 >>>>>>> 6a46dbf (Setting up the project environment, packages, and essential libraries.)
+=======
+>>>>>>> 187e2c0cf5c8eb0b2d2047666410bd74ffa78803

@@ -106,9 +106,14 @@ const submit = async function() {
         });
 
         console.log(response.data.data.user);
+<<<<<<< HEAD
         store.loginSave(response.data.data.user);
         errorMessage.value = '';
         useCookie('token').value = response.data.data.token;
+=======
+        store.loginSave(response.data.data.user,response.data.data.token);
+        errorMessage.value = '';
+>>>>>>> 187e2c0cf5c8eb0b2d2047666410bd74ffa78803
         navigateTo('/dashboard/profile')
 
         console.log('Signup successful:', response.data);
@@ -120,6 +125,7 @@ const submit = async function() {
       }
     }
   });
+<<<<<<< HEAD
   
   console.log(476, useCookie('token').value);
 };
@@ -196,3 +202,7 @@ console.log(personalInfo);
    }})}
    console.log(476, useCookie('token').value);
 </script>-->
+=======
+};
+</script>
+>>>>>>> 187e2c0cf5c8eb0b2d2047666410bd74ffa78803

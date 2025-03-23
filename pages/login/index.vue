@@ -94,8 +94,12 @@ const submit = async function () {
             });
             console.log('login successful:', response.data);
             errorMessage.value = ''
+<<<<<<< HEAD
             useCookie("token").value = response.data.data.token;
             store.loginSave(response.data.data.user);
+=======
+            store.loginSave(response.data.data.user,response.data.data.token);
+>>>>>>> 187e2c0cf5c8eb0b2d2047666410bd74ffa78803
             navigateTo('/dashboard/profile')
 
           } catch (error) {

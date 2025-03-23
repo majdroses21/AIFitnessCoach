@@ -4,10 +4,14 @@
 .nuxt
 .nitro
 <<<<<<< HEAD
+<<<<<<< HEAD
 .cachecls
 =======
 .cache
 >>>>>>> 6a46dbf (Setting up the project environment, packages, and essential libraries.)
+=======
+.cache
+>>>>>>> 187e2c0cf5c8eb0b2d2047666410bd74ffa78803
 dist
 
 # Node dependencies
