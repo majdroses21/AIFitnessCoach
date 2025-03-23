@@ -22,9 +22,14 @@ export const useAuthStore = defineStore('auth', {
             const tokenCookie = useCookie('token')
             userCookie.value = null;
             tokenCookie.value = null;
+            //
             this.user = null;
             this.token = null;
-            this.loggedIn = false
+            this.loggedIn = false;
+            //
+            document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            navigateTo('/')
         },
         refreshState(user) {
             const userCookie = useCookie('user')

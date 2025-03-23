@@ -28,7 +28,7 @@
           <NuxtLink to="/dashboard/Profile" style="all: unset;">
             <v-list-item prepend-icon="mdi-account" title="Profile" value="Profile"></v-list-item>
           </NuxtLink>
-          <v-list-item style="position:absolute;bottom:0" class="text-red-darken-2 logout" prepend-icon="mdi-logout" title="logout" value="logout">
+          <v-list-item @click="logMeOut()" style="position:absolute;bottom:0" class="text-red-darken-2 logout" prepend-icon="mdi-logout" title="logout" value="logout">
              <v-tooltip activator="parent">Logout</v-tooltip>
 
           </v-list-item>
@@ -46,7 +46,13 @@
  }
 </style>
 <script setup>
+import { useAuthStore } from '~/store/auth';
 
+const store = useAuthStore();
+const logMeOut = () => {
+  console.log('Get Out');
+  store.logout()
+}
 </script>
 <script>
 export default {
