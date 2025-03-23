@@ -82,7 +82,6 @@ const { data, error } = useFetch(apiUrl + '/profile/' + userId + '/completion', 
 });
 watch(data, (newValue) => {
   if (newValue && newValue.data) {
-    console.log(newValue.data.isComplete, 88);
     isCompleatInfo.value = !newValue.data.isComplete;
   }
 }, { immediate: true });
