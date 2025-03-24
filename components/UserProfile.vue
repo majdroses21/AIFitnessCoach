@@ -97,11 +97,11 @@ const submitProfile = async () => {
         Accept: 'application/json'
       },
     }).then((response) => {
-      console.log(response);
       isCompleatInfo.value = false;
       const { generateNutritionPlan } = useFetch(apiUrl + '/ai/' + userId + '/nutrition-plan');
       const { generateWorkout } = useFetch(apiUrl + '/ai/' + userId + '/workout-plan');
       const { generateExercises } = useFetch(apiUrl + '/exercises/' + userId );
+      navigateTo('/dashboard/exercises')
       //TODO Show Alert Here
 
     });
