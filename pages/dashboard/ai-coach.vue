@@ -1,6 +1,6 @@
 <template>
     <NuxtLayout name="gym">
-        <v-container class="fill-height pa-0">
+        <v-container class="pa-0 container-chat" :class="{ 'fill-height': $vuetify.display.mdAndDown }">
             <v-card class="chat-container mx-auto" elevation="0" rounded="lg">
                 <div class="chat-messages pa-4" ref="chatContainer">
                     <div v-for="(message, index) in messages" :key="index"
@@ -214,4 +214,10 @@ onMounted(() => {
 :deep(.v-field__outline) {
     display: none;
 }
+@media(max-width: 960px){
+    .chat-input{
+        margin-bottom: 22px;
+    }
+}
+
 </style>
